@@ -1,8 +1,8 @@
 // use std::cmp;
 use std::collections::HashMap;
 // use std::collections::HashSet;
-use std::fs;
 use num::integer::lcm;
+use std::fs;
 
 fn main() {
     let datastream: String = fs::read_to_string("input/day11.txt")
@@ -13,7 +13,6 @@ fn main() {
     // Part 1: 3, Part 2: 1
     const WORRY_DIVISOR: u64 = 1;
     const ROUNDS: u64 = 10000;
-
 
     let monkeys: Vec<&str> = datastream.trim().split("\n\n").collect();
 
@@ -135,5 +134,8 @@ fn main() {
     let mut inspect_counts: Vec<u64> = monkey_inspect_count.values().map(|x| *x).collect();
     inspect_counts.sort_by(|a, b| b.cmp(a));
     println!("{:?}", inspect_counts);
-    println!("Monkey business: {:?}", inspect_counts[0]*inspect_counts[1]);
+    println!(
+        "Monkey business: {:?}",
+        inspect_counts[0] * inspect_counts[1]
+    );
 }

@@ -58,16 +58,23 @@ fn main() {
             .map(|row| row.iter().map(|x| *x < max_steps).collect())
             .collect();
 
+        // Fields where the neighbors have already been checked 
+        let mut checked_arr: Vec<Vec<bool>> = steps_arr
+            .iter()
+            .map(|row| row.iter().map(|x| false).collect())
+            .collect();
+
         // Step counter
         let mut step = 0;
 
         // Iterate until goal is found (or max_steps is reached => unreachable)
         while reachable_arr[end_pos.0][end_pos.1] == false && step < max_steps {
             let mut new_reachable_arr = reachable_arr.clone();
+
             for i in 0..board_height {
                 for j in 0..board_width {
                     // Check all fields adjacent to a reachable field
-                    if reachable_arr[i][j] == true {
+                    if reachable_arr[i][j] == true && checked_arr[i][j] == false {
                         if i > 0 {
                             new_reachable_arr[i - 1][j] = height_arr[i - 1][j] - 1
                                 <= height_arr[i][j]
@@ -88,6 +95,7 @@ fn main() {
                                 <= height_arr[i][j]
                                 || new_reachable_arr[i][j + 1];
                         }
+                        checked_arr[i][j] = true;
                     }
                 }
             }
